@@ -16,12 +16,23 @@
       <p></p>
       <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Update Data!</a></p>
     </div>
-    <img src="{{ mars.featureImage }}" alt="Mars">
+    <img style="width:800px;" src="{{ mars.featureImage }}" alt="Mars">
     
     <h3>{{ mars.newsTitle }}</h3>
     <p>{{ mars.newsP}}</p>
+    <div>{{ mars.dataTable|safe}}
+    </br>
+      {%for hemisphere in mars.hemispheres%}
+      
+      {{hemisphere.title}}</br>
+      
+      <img style="width:200px;height:200px" src="{{hemisphere.img_url}}"></br></br>
+      {%endfor%}
+      </div>
   </div>
-  </div>
+  
+ 
+  
 </body>
 
 </html>

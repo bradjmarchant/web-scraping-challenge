@@ -8,6 +8,7 @@ import time
 import json
 
 
+
 def init_browser():
     # @NOTE: Replace the path with your actual path to the chromedriver
     executable_path = {'executable_path': ChromeDriverManager().install()}
@@ -26,9 +27,16 @@ def scrape_info():
     soup = bs(html, "html.parser")
 
     # Collect Headline
+    time.sleep(2)
     headlines = soup.find('li', class_="slide")
-    title = headlines.find('div', class_="content_title").a.text.strip()
-    news_p = headlines.find('div', class_="article_teaser_body").text
+    try:
+        title = headlines.find('div', class_="content_title").a.text.strip()
+    except:
+        title= ""
+    try:
+        news_p = headlines.find('div', class_="article_teaser_body").text
+    except:
+        news_p = ""
     # Next Site collect main image
     image_url= "https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars"
     browser.visit(image_url)
@@ -44,6 +52,7 @@ def scrape_info():
     mars_url="https://space-facts.com/mars/"
     browser.visit(mars_url)
     df=pd.read_html(mars_url)[0]
+    df.columns=["Description","Data"]
     mars_table=df.to_html()
     # Go to next site, collect hemishpere data
     
